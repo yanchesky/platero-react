@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" href="favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#000000" />
+    <script src="https://cdn.polyfill.io/v2/polyfill.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700&display=swap" rel="stylesheet">
+    <link rel="apple-touch-icon" href="logo192.png" />
+    <link href="https://fonts.googleapis.com/css?family=Barlow:300,400,600,700&display=swap" rel="stylesheet">
+    <title>Miguel Platero</title>
+  </head>
+  <body>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <script>
+      if (!Object.entries){
+        Object.entries = function( obj ){
+          var ownProps = Object.keys( obj ),
+              i = ownProps.length,
+              resArray = new Array(i);
+          while (i--)
+            resArray[i] = [ownProps[i], obj[ownProps[i]]];
+
+          return resArray;
+        };
+      }
+    </script>
+    <div id="root"></div>
+    <script>
+      window.onload = function(){
+        const image = document.getElementById("fullscreen-image");
+        const arrow = document.getElementById("fullscreen-arrow");
+
+        if(image && arrow){
+          window.onscroll = function(){
+            if(window.scrollY < 1500){
+              const blurValue = Math.min(5, window.scrollY / 100);
+              const fadeValue = Math.max(0, 1 - (window.scrollY / 100));
+
+              image.style.filter = "blur(+" + blurValue + "px)";
+              arrow.style.opacity = fadeValue.toString();
+            }
+          }
+        }
+      }
+    </script>
+  </body>
+</html>
