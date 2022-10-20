@@ -10,6 +10,7 @@ import ShowMoreButton         from "./ShowMoreButton";
 import media                  from 'styledComponents/media'
 import { misc }               from "../lang";
 import { pickRouteFromArray } from "../helpers";
+import CircularProgress from "@material-ui/core/CircularProgress";
 
 const CategoriesWrapper = styled.div`
   z-index: 1;
@@ -38,13 +39,14 @@ const checkIfTrim = string => {
   return output.length > 1
 };
 
-const Exhibitions = ({ exhibitions, home, horizontal, translatedLink, lang }) => {
+const Exhibitions = ({ exhibitions, home, horizontal, translatedLink, isLoading, lang }) => {
   const isMoreContent = home && exhibitions.length > 3;
   const filteredExhibitions = isMoreContent ? exhibitions.slice(0, 3) : exhibitions;
 
   return (
     <>
       <Heading home margin="60px 0 30px">{translatedLink.label}</Heading>
+        {isLoading && <div style={{display: 'flex', justifyContent: 'center'}}><CircularProgress /></div>}
       <CategoriesWrapper isMoreContent={isMoreContent} horizontal={horizontal}>
         {
           filteredExhibitions.map((el, index) => (

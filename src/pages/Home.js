@@ -17,6 +17,9 @@ import { isEmpty }                      from "helpers";
 import { homeStateToProps }             from "helpers/stateToPropsMappers"
 
 class Home extends Component {
+  state = {
+    isLoading: true
+  }
   async componentDidMount() {
     const [
       photos,
@@ -33,7 +36,7 @@ class Home extends Component {
       getLiterature(),
       getNews()
     ]);
-
+    this.setState({isLoading: false})
 
     this.props.dispatch( 'photos', photos );
     this.props.dispatch( 'galleryCategories', galleryCategories );
@@ -49,14 +52,13 @@ class Home extends Component {
     if(isEmpty(translatedLinks)) return null;
     
     const [galleryLink, exhibitionsLink, newsLink, videosLink] = translatedLinks;
-
     return (
       <>
         <FullscreenImage />
-        <GalleryCategories home translatedLink={galleryLink} />
-        <Exhibitions home exhibitions={exhibitions} translatedLink={exhibitionsLink} />
-        <Exhibitions home exhibitions={news} translatedLink={newsLink} />
-        <Videos home translatedLink={videosLink} />
+        <GalleryCategories isLoading={this.state.isLoading} home translatedLink={galleryLink} />
+        <Exhibitions isLoading={this.state.isLoading} home exhibitions={exhibitions} translatedLink={exhibitionsLink} />
+        <Exhibitions isLoading={this.state.isLoading} home exhibitions={news} translatedLink={newsLink} />
+        <Videos isLoading={this.state.isLoading} home translatedLink={videosLink} />
       </>
     )
   };

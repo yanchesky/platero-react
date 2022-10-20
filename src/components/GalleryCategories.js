@@ -9,6 +9,9 @@ import media                from 'styledComponents/media'
 
 import { misc }             from 'lang'
 import Heading              from "./Heading";
+import {pickRouteFromArray} from "../helpers";
+
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 const CategoriesWrapper = styled.div`
   opacity: 1;
@@ -43,19 +46,29 @@ const generateLink = (loc, id, translatedLink) => {
   }
 };
 
-const GalleryCategories = ({ galleryCategories, home, translatedLink, lang }) => {
+const GalleryCategories = ({ galleryCategories, home, translatedLink, lang, isLoading }) => {
   const isMoreContent = home && galleryCategories.length > 4;
   const filteredCategories = isMoreContent ? galleryCategories.slice(0, 6) : galleryCategories;
+
   return (
     <>
       {translatedLink && <Heading home margin="60px 0 30px">{translatedLink.label}</Heading>}
+      {isLoading && <div style={{display: 'flex', justifyContent: 'center'}}><CircularProgress /></div>}
       <CategoriesWrapper isMoreContent={isMoreContent}>
         {
           filteredCategories.map((photoCategory, index) => (
             <Link
               key={index}
               onClick={() => {window.scrollTo(0,0)}}
-              to={(loc) => generateLink(loc, photoCategory.id, translatedLink)}
+              to={(loc) => {
+
+                if(!translatedLink){
+                  return generateLink(loc, photoCategory.id, translatedLink)
+                }else{
+                return `${pickRouteFromArray(translatedLink.path)}/${photoCategory.id}`
+                }
+
+              }}
             >
               <MainCard
                 isWork
