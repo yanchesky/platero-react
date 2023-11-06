@@ -34,15 +34,11 @@ class App extends React.Component {
   componentDidMount(){
     window.scrollTo(0,0);
   }
-  state = {
-    isPopoutOpen: true
-  }
 
   render(){
     return (
       <BrowserRouter>
         <Provider store={store}>
-            {this.state.isPopoutOpen && <PopoutModal closePopout={() => this.setState({isPopoutOpen: false})} />}
           <GlobalStyle />
           <Main />
         </Provider>
@@ -87,7 +83,7 @@ const PopoutModal = ({ closePopout }) => {
                     right: '10px',
                   }}
               >✕</span>
-            <img src={PopoutImage} style={{width: '100%', maxHeight: '100%'}} alt="popout" />
+            <img src={PopoutImage} style={{ width: 'auto', maxHeight: '100%'}} alt="popout" />
           </div>
       </div>
   )
